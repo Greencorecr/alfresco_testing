@@ -10,7 +10,7 @@ on:
 
 jobs:
   alfresco-testing:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - name: Setup JDK 11
       id: setup-java-11
@@ -20,6 +20,7 @@ jobs:
     - uses: actions/checkout@v2.2.0
       with:
         fetch-depth: 0
+        submodules: true
     - name: Github CI uninstall
       run: |
         sudo apt-get purge -y php*  adoptopenjdk-8-hotspot
@@ -29,6 +30,8 @@ jobs:
       run: sudo scripts/ldap-install.sh
     - name: Manual LDAP Test
       run: ldapsearch -x -H ldap://127.0.0.1:3004 -b "dc=test" "(&(objectclass=person)(cn=user-login))" attribute1 attribute2
+    - name: Testing submodules
+      run: find . 
         #    - name: Alfresco install
         #      run: |
         #        ./alfinstall.sh

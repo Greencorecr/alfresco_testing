@@ -1,0 +1,3 @@
+[submodule "installer/alfresco"]
+	path = installer/alfresco/
+	url = github.com/fede2cr/alfresco-ubuntu-install/
