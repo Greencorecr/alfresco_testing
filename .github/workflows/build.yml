@@ -17,12 +17,10 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - uses: actions/checkout@v2.2.0
+    - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-        submodules: true
-    - name: Git fetch
-      run: git fetch --recurse-submodules=no https://github.com/Greencorecr/alfresco_testing refs/tags/*:refs/tags/*
+        submodules: recursive
     - name: Github CI uninstall
       run: |
         sudo apt-get purge -qqy php*  adoptopenjdk-8-hotspot
