@@ -9,7 +9,7 @@ on:
     type: [rerequested]
 
 jobs:
-  alf-install:
+  alfresco-testing:
     runs-on: ubuntu-latest
     steps:
     - name: Setup JDK 11
@@ -26,7 +26,7 @@ jobs:
         sudo ln -s /usr/lib/jvm/adoptopenjdk-11-hotspot-amd64 /usr/lib/jvm/adoptopenjdk-8-hotspot-amd64
         sudo update-java-alternatives -s adoptopenjdk-11-hotspot-amd64
     - name: Mock LDAP Server
-      run: scripts/ldap-install.sh
+      run: sudo scripts/ldap-install.sh
     - name: Manual LDAP Test
       run: ldapsearch -x -H ldap://127.0.0.1:3004 -b "dc=test" "(&(objectclass=person)(cn=user-login))" attribute1 attribute2
         #    - name: Alfresco install
