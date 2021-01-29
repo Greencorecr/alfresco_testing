@@ -23,7 +23,7 @@ jobs:
         submodules: recursive
     - name: Github CI uninstall
       run: |
-        sudo apt-get purge -qqy php*  adoptopenjdk-8-hotspot
+        sudo apt-get purge -qqy php* apache* nginx* adoptopenjdk-8-hotspot
         sudo ln -s /usr/lib/jvm/adoptopenjdk-11-hotspot-amd64 /usr/lib/jvm/adoptopenjdk-8-hotspot-amd64
         sudo update-java-alternatives -s adoptopenjdk-11-hotspot-amd64
     - name: Alfresco install
@@ -41,6 +41,7 @@ jobs:
         #wget -O - --no-check-certificate https://localhost/alfresco
         #wget -O - --no-check-certificate https://localhost/share
         systemctl status nginx
+        sudo nginx -T
         python3 test/alfresco_test.py
     - name: Mock LDAP Server
       run: sudo scripts/ldap-install.sh
