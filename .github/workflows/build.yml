@@ -40,6 +40,7 @@ jobs:
         wget -O - --no-check-certificate http://localhost:8080/share
         #wget -O - --no-check-certificate https://localhost/alfresco
         #wget -O - --no-check-certificate https://localhost/share
+        systemctl status nginx
         python3 test/alfresco_test.py
     - name: Mock LDAP Server
       run: sudo scripts/ldap-install.sh
