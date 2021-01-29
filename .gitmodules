@@ -1,3 +1,6 @@
 [submodule "alfresco-ubuntu-install"]
 	path = alfresco-ubuntu-install
 	url = https://github.com/fede2cr/alfresco-ubuntu-install/
+[submodule "acs-community-deployment"]
+	path = acs-community-deployment
+	url = https://github.com/Greencorecr/acs-community-deployment
