@@ -21,40 +21,27 @@ jobs:
       with:
         fetch-depth: 0
         submodules: recursive
-        #- name: Github CI uninstall
-        #  run: |
-        #    sudo apt-get purge -qqy php*  adoptopenjdk-8-hotspot
-        #    sudo ln -s /usr/lib/jvm/adoptopenjdk-11-hotspot-amd64 /usr/lib/jvm/adoptopenjdk-8-hotspot-amd64
-        #    sudo update-java-alternatives -s adoptopenjdk-11-hotspot-amd64
-    - name: Mock LDAP Server
-      run: sudo scripts/ldap-install.sh
-    - name: Manual LDAP Test
-      run: ldapsearch -x -H ldap://127.0.0.1:3004 -b "dc=test" "(&(objectclass=person)(cn=user-login))" attribute1 attribute2
-    - name: Testing submodules
-      run: find . 
-        #    - name: Alfresco install
-        #      run: |
-        #        ./alfinstall.sh
-        #    - name: Install Pause
-        #      run: sleep 4m
-        #    - name: Basic web tests
-        #      run: |
-        #        java -version
-        #        ps faxww
-        #        cat /opt/alfresco/tomcat/logs/*
-        #        #wget -O - --no-check-certificate http://localhost/alfresco
-        #        wget -O - --no-check-certificate http://localhost:8080/share
-        #        #wget -O - --no-check-certificate https://localhost/alfresco
-        #        #wget -O - --no-check-certificate https://localhost/share
-        #        #python3 test/alf_test.py
-        #
-        #    - name: Alflytics install
-        #      run: ./alflytics.sh
-        #    - name: Alflytics Pause
-        #      run: sleep 2m
-        #    - name: Basic web tests for Alflytics
-        #      run: |
-        #        java -version
-        #        ps faxww
-        #        wget -O - --no-check-certificate http://localhost:8080/
-        #
+    - name: Github CI uninstall
+      run: |
+        sudo apt-get purge -qqy php*  adoptopenjdk-8-hotspot
+        sudo ln -s /usr/lib/jvm/adoptopenjdk-11-hotspot-amd64 /usr/lib/jvm/adoptopenjdk-8-hotspot-amd64
+        sudo update-java-alternatives -s adoptopenjdk-11-hotspot-amd64
+        - name: Alfresco install
+          run: |
+            ./alfresco-ubuntu-install/alfinstall.sh
+        - name: Install Pause
+          run: sleep 4m
+        - name: Basic web tests
+          run: |
+            java -version
+            ps faxww
+            cat /opt/alfresco/tomcat/logs/*
+            #wget -O - --no-check-certificate http://localhost/alfresco
+            wget -O - --no-check-certificate http://localhost:8080/share
+            #wget -O - --no-check-certificate https://localhost/alfresco
+            #wget -O - --no-check-certificate https://localhost/share
+            #python3 test/alf_test.py
+        - name: Mock LDAP Server
+          run: sudo scripts/ldap-install.sh
+        - name: Manual LDAP Test
+          run: ldapsearch -x -H ldap://127.0.0.1:3004 -b "dc=test" "(&(objectclass=person)(cn=user-login))" attribute1 attribute2
