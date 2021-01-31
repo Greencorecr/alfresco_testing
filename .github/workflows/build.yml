@@ -33,6 +33,11 @@ jobs:
       run: sleep 4m
     - name: Basic web tests
       run: |
+        systemctl status nginx
+        sudo systemctl restart nginx
+        find /etc/nginx
+        sudo nginx -T
+        python3 test/alfresco_test.py
         java -version
         ps faxww
         cat /opt/alfresco/tomcat/logs/*
@@ -40,9 +45,6 @@ jobs:
         wget -O - --no-check-certificate http://localhost:8080/share
         #wget -O - --no-check-certificate https://localhost/alfresco
         #wget -O - --no-check-certificate https://localhost/share
-        systemctl status nginx
-        sudo nginx -T
-        python3 test/alfresco_test.py
     - name: Mock LDAP Server
       run: sudo scripts/ldap-install.sh
     - name: Manual LDAP Test
