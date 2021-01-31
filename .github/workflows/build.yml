@@ -35,6 +35,7 @@ jobs:
       run: |
         systemctl status nginx
         sudo systemctl restart nginx
+        cat /etc/nginx/sites-available/default
         find /etc/nginx
         sudo nginx -T
         python3 test/alfresco_test.py
