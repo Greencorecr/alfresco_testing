@@ -29,10 +29,6 @@ jobs:
     - name: Alfresco install
       run: |
         ./alfresco-ubuntu-install/alfinstall.sh
-    - name: Install Pause
-      run: sleep 4m
-    - name: Basic web tests
-      run: |
         sudo rm /etc/nginx/sites-available/default
         sudo wget -O /etc/nginx/conf.d/alfresco.conf https://github.com/fede2cr/alfresco-ubuntu-install/raw/master/nginx/default
         sudo rm /etc/nginx/nginx.conf
@@ -41,9 +37,10 @@ jobs:
         ( cd /etc/letsencrypt/live/alfresco-demo.greencore.co.cr/ && sudo openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=newdomain.com" -addext "subjectAltName=DNS:newdomain.com" -newkey rsa:2048 -out fullchain.pem -keyout privkey.pem )
         sudo systemctl restart nginx
         systemctl status nginx
-        find /etc/nginx
-        sudo nginx -T
-        sudo netstat -tln4
+    - name: Install Pause
+      run: sleep 4m
+    - name: Basic web tests
+      run: |
         python3 test/alfresco_test.py
         java -version
         ps faxww

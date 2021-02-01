@@ -23,10 +23,10 @@ class ShareTest(unittest.TestCase):
         r.status_code
         self.assertEqual(r.status_code, 404)
 
-    def test_share_login(self):
-        r = requests.get('https://localhost/alfresco/service/index', auth=('admin', 'admin'), verify=False)
-        r.status_code
-        self.assertEqual(r.status_code, 200)
+#    def test_share_login(self):
+#        r = requests.get('https://localhost/alfresco/service/index', auth=('admin', 'admin'), verify=False)
+#        r.status_code
+#        self.assertEqual(r.status_code, 200)
 
     def test_share_login_fail(self):
         r = requests.get('https://localhost/alfresco/service/index', auth=('admin', 'notadmin'), verify=False)
