@@ -33,7 +33,7 @@ class ShareTest(unittest.TestCase):
         r.status_code
         self.assertEqual(r.status_code, 401)
 
-def test_share_login(self):
+    def test_share_login(self):
         r = requests.get('https://localhost/share', auth=('admin', 'admin'), verify=False)
         r.status_code
         self.assertEqual(r.status_code, 200)
