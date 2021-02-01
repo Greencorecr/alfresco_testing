@@ -38,10 +38,14 @@ jobs:
         sudo cat /etc/nginx/sites-available/default
         sudo rm /etc/nginx/nginx.conf
         sudo wget -O /etc/nginx/nginx.conf https://github.com/fede2cr/alfresco-ubuntu-install/raw/master/nginx/nginx.conf
+        sudo mkdir /etc/letsencrypt/live/alfresco-demo.greencore.co.cr/
+        cd /etc/letsencrypt/live/alfresco-demo.greencore.co.cr/
+        sudo openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=newdomain.com" -addext "subjectAltName=DNS:newdomain.com" -newkey rsa:2048 -out fullchain.pem -keyout privkey.pem
         sudo systemctl restart nginx
         systemctl status nginx
         find /etc/nginx
         sudo nginx -T
+        sudo netstat -tln4
         python3 test/alfresco_test.py
         java -version
         ps faxww
