@@ -45,19 +45,16 @@ jobs:
         java -version
         ps faxww
         cat /opt/alfresco/tomcat/logs/*
-        #wget -O - --no-check-certificate http://localhost/alfresco
         wget -O - --no-check-certificate http://localhost:8080/share
-        #wget -O - --no-check-certificate https://localhost/alfresco
-        #wget -O - --no-check-certificate https://localhost/share
     - name: Mock LDAP Server
       run: sudo scripts/ldap-install.sh
     - name: Manual LDAP Test
       run: ldapsearch -x -H ldap://127.0.0.1:3004 -b "dc=test" "(&(objectclass=person)(cn=user-login))" attribute1 attribute2
     - name: Integrate LDAP into Alfresco
       run: |
-        sudo /opt/alfresco/alfrescoservice.sh servicestop
+        sudo /opt/alfresco/alfresco-service.sh servicestop
         sudo sed -i 's/#LDAP# //g' /opt/alfresco/tomcat/shared/classes/alfresco-global.properties
-        sudo /opt/alfresco/alfrescoservice.sh servicestart
+        sudo /opt/alfresco/alfresco-service.sh servicestart
     - name: Basic web tests with LDAP
       run: |
         ps faxww
