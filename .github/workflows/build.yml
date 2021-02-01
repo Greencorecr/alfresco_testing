@@ -34,8 +34,7 @@ jobs:
     - name: Basic web tests
       run: |
         sudo rm /etc/nginx/sites-available/default
-        sudo wget -O /etc/nginx/sites-available/default https://github.com/fede2cr/alfresco-ubuntu-install/raw/master/nginx/default
-        sudo cat /etc/nginx/sites-available/default
+        sudo wget -O /etc/nginx/conf.d/alfresco.conf https://github.com/fede2cr/alfresco-ubuntu-install/raw/master/nginx/default
         sudo rm /etc/nginx/nginx.conf
         sudo wget -O /etc/nginx/nginx.conf https://github.com/fede2cr/alfresco-ubuntu-install/raw/master/nginx/nginx.conf
         sudo mkdir -p /etc/letsencrypt/live/alfresco-demo.greencore.co.cr/
