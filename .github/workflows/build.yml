@@ -47,7 +47,7 @@ jobs:
     - name: Mock LDAP Server
       run: sudo scripts/ldap-install.sh
     - name: Manual LDAP Test
-      run: ldapsearch -x -H ldap://127.0.0.1:3004 -b "dc=test" "(&(objectclass=person)(cn=user-login))" attribute1 attribute2
+      run: ldapsearch -LLL -H ldap://localhost:389 -D cn=ldapuser,ou=ldapgroup,dc=greeencore,dc=priv -w dogood -x -bdc=greeencore,dc=priv cn=ldapuser
     - name: Integrate LDAP into Alfresco
       run: |
         sudo /opt/alfresco/alfresco-service.sh servicestop
@@ -59,5 +59,5 @@ jobs:
       run: |
         ps faxww
         cat /opt/alfresco/tomcat/logs/*
-        wget -O - --no-check-certificate http://localhost:8080/share
-        python3 test/alfresco_test.py
+        python3 test/test_basic.py
+        python3 test/test_ldap.py

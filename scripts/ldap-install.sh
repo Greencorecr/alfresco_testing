@@ -1,28 +1,24 @@
 #/usr/bin/env bash
 
-apt install -qy npm ldap-utils
+apt install -qy ldap-utils
 
-npm install ldap-server-mock
+https://github.com/glauth/glauth/releases/download/v1.1.2/glauth64
 
-cat << EOF | tee ldap-server-mock-conf.json
-{
-  "port": 3004,
-  "userLoginAttribute": "cn",
-  "searchBase": "dc=test",
-  "searchFilter": "(&(objectclass=person)(cn={{username}}))"
-}
+cat << EOF | tee glauth.cfg
+[ldap]
+  enabled = true
+  listen = "0.0.0.0:3893"
+[backend]
+  datastore = "config"
+  baseDN = "dc=greencore,dc=priv"
+[[users]]
+  name = "ldapuser"
+  unixid = 5001
+  primarygroup = 5501
+  passsha256 = "6478579e37aff45f013e14eeb30b3cc56c72ccdc310123bcdf53e0333e3f416a" # dogood
+[[groups]]
+  name = "ldapgroup"
+  unixid = 5501
 EOF
 
-cat << EOF | tee users.json
-[
-  {
-    "dn": "cn=user,dc=test",
-    "cn": "user-login",
-    "attribute1": "value1",
-    "attribute2": "value2"
-  }
-]
-EOF
-
-node node_modules/ldap-server-mock/server.js --conf=./ldap-server-mock-conf.json --database=./users.json &
-
+glauth -c glauth.cfg  &
