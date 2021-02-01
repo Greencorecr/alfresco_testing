@@ -33,9 +33,13 @@ jobs:
       run: sleep 4m
     - name: Basic web tests
       run: |
-        systemctl status nginx
+        sudo rm /etc/nginx/sites-available/default
+        sudo wget -O /etc/nginx/sites-available/default https://github.com/fede2cr/alfresco-ubuntu-install/raw/master/nginx/default
+        sudo cat /etc/nginx/sites-available/default
+        sudo rm /etc/nginx/nginx.conf
+        sudo wget -O /etc/nginx/nginx.conf https://github.com/fede2cr/alfresco-ubuntu-install/raw/master/nginx/nginx.conf
         sudo systemctl restart nginx
-        cat /etc/nginx/sites-available/default
+        systemctl status nginx
         find /etc/nginx
         sudo nginx -T
         python3 test/alfresco_test.py
