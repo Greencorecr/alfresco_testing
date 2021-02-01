@@ -53,8 +53,10 @@ jobs:
     - name: Integrate LDAP into Alfresco
       run: |
         sudo /opt/alfresco/alfresco-service.sh servicestop
+        sudo rm /opt/alfresco/tomcat/logs/*
         sudo sed -i 's/#LDAP# //g' /opt/alfresco/tomcat/shared/classes/alfresco-global.properties
         sudo /opt/alfresco/alfresco-service.sh servicestart
+        sleep 1m
     - name: Basic web tests with LDAP
       run: |
         ps faxww
