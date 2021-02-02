@@ -10,10 +10,10 @@ chmod +x glauth
 cat << EOF | tee glauth.cfg
 [ldap]
   enabled = true
-  listen = "0.0.0.0:3893"
+  listen = "0.0.0.0:389"
 [ldaps]
   enabled = true
-  listen = "0.0.0.0:3894"
+  listen = "0.0.0.0:636"
   cert = "certs/server.crt"
   key = "certs/server.key"
 [backend]
