@@ -48,7 +48,7 @@ jobs:
     - name: Mock LDAP Server
       run: sudo scripts/ldap-install.sh
     - name: Manual LDAP Test
-      run: ldapsearch -LLL -H ldap://localhost:389 -D cn=ldapuser,ou=ldapgroup,dc=greeencore,dc=priv -w dogood -x -bdc=greeencore,dc=priv cn=ldapuser
+      run: ldapsearch -LLL -H ldap://localhost:389 -D cn=ldapuser,ou=ldapgroup,dc=greencore,dc=priv -w dogood -x -bdc=greencore,dc=priv cn=ldapuser
     - name: Integrate LDAP into Alfresco
       run: |
         sudo /opt/alfresco/alfresco-service.sh servicestop
