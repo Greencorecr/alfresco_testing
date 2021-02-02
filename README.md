@@ -7,8 +7,8 @@ Testing framework for Alfresco and it's modules
 
 - [x] Alfresco standalone install
 - [ ] Alfresco docker install
+- [x] Local LDAP server for testing
 - [x] Alfresco LDAP integration
 - [x] Alfresco Audit testing
-- [ ] LDAP mock server for testing
 - [ ] Login into Share via Selenium 
 - [ ] Alfresco backup and restore with B.A.R.T.

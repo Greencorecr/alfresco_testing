@@ -21,6 +21,10 @@ jobs:
       with:
         fetch-depth: 0
         submodules: recursive
+    - name: Pylint checks
+      run: |
+        sudo pip3 install pylint
+        pylint test/*.py
     - name: Github CI uninstall
       run: |
         #sudo apt-get purge -qqy php* apache* nginx* adoptopenjdk-8-hotspot
@@ -45,9 +49,9 @@ jobs:
         java -version
         python3 test/test_basic.py
         #python3 test/test_audit.py
-    - name: Mock LDAP Server
+    - name: Installs local LDAP Server
       run: sudo scripts/ldap-install.sh
-    - name: Manual LDAP Test
+    - name: Testing local LDAP Server
       run: ldapsearch -LLL -H ldap://localhost:389 -D cn=ldapuser,ou=ldapgroup,dc=greencore,dc=priv -w dogood -x -bdc=greencore,dc=priv cn=ldapuser
     - name: Integrate LDAP into Alfresco
       run: |
@@ -56,7 +60,7 @@ jobs:
         sudo sed -i 's/#LDAP# //g' /opt/alfresco/tomcat/shared/classes/alfresco-global.properties
         sudo /opt/alfresco/alfresco-service.sh servicestart
         sleep 1m
-    - name: Basic web tests with LDAP
+    - name: Testing Alfresco LDAP Auth
       run: |
         ps faxww
         cat /opt/alfresco/tomcat/logs/*
