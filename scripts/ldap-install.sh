@@ -2,7 +2,8 @@
 
 apt install -qy ldap-utils
 
-https://github.com/glauth/glauth/releases/download/v1.1.2/glauth64
+wget -O glauth https://github.com/glauth/glauth/releases/download/v1.1.2/glauth64
+chmod +x glauth
 
 cat << EOF | tee glauth.cfg
 [ldap]
@@ -21,4 +22,4 @@ cat << EOF | tee glauth.cfg
   unixid = 5501
 EOF
 
-glauth -c glauth.cfg  &
+./glauth -c glauth.cfg  &
