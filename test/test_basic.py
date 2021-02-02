@@ -38,10 +38,10 @@ class ShareTest(unittest.TestCase):
         r.status_code
         self.assertEqual(r.status_code, 200)
 
-    #def test_share_login_fail(self):
-    #    r = requests.get('https://localhost/share', auth=('admin', 'notadmin'), verify=False)
-    #    r.status_code
-    #    self.assertEqual(r.status_code, 401)
+    def test_share_login_fail(self):
+        r = requests.get('https://localhost/share', auth=('admin', 'notadmin'), verify=False)
+        r.status_code
+        self.assertEqual(r.status_code, 401)
 
 if __name__ == '__main__':
     unittest.main()
