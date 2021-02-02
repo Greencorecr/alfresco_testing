@@ -4,8 +4,7 @@ import requests
 class LdapTest(unittest.TestCase):
 
     def test_ldap(self):
-        r = requests.get('https://localhost/alfresco/service/index', auth=('ldapuser', 'dogood'), verify=Fals
-e)
+        r = requests.get('https://localhost/alfresco/service/index', auth=('ldapuser', 'dogood'), verify=False)
         r.status_code
         self.assertEqual(r.status_code, 200)
 
