@@ -43,6 +43,8 @@ jobs:
       run: |
         java -version
         cat /opt/alfresco/tomcat/shared/classes/alfresco-global.properties
+        md5sum /opt/alfresco/tomcat/shared/classes/alfresco-global.properties
+        stat /opt/alfresco/tomcat/shared/classes/alfresco-global.properties
         ls -l /opt/alfresco/tomcat/shared/classes/alfresco-global.properties
         python3 test/test_basic.py
         python3 test/test_audit.py
