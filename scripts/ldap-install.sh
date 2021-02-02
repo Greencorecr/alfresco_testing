@@ -5,10 +5,17 @@ apt install -qy ldap-utils
 wget -O glauth https://github.com/glauth/glauth/releases/download/v1.1.2/glauth64
 chmod +x glauth
 
+(mkdir certs/ && cd certs && openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=newdomain.com" -addext "subjectAltName=DNS:newdomain.com" -newkey rsa:2048 -out server.crt -keyout server.key )
+
 cat << EOF | tee glauth.cfg
 [ldap]
   enabled = true
   listen = "0.0.0.0:3893"
+[ldaps]
+  enabled = true
+  listen = "0.0.0.0:3894"
+  cert = "certs/server.crt"
+  key = "certs/server.key"
 [backend]
   datastore = "config"
   baseDN = "dc=greencore,dc=priv"
