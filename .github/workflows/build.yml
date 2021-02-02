@@ -60,6 +60,8 @@ jobs:
         sudo sed -i 's/#LDAP# //g' /opt/alfresco/tomcat/shared/classes/alfresco-global.properties
         sudo /opt/alfresco/alfresco-service.sh servicestart
         sleep 1m
+    - name: Testing Alfresco B.A.R.T. Backup
+      run: sudo /opt/alfresco/scripts/bart/alfresco-bart.sh backup all
     - name: Testing Alfresco LDAP Auth
       run: |
         ps faxww
