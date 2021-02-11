@@ -9,7 +9,7 @@ on:
     type: [rerequested]
 
 jobs:
-  alfresco-testing:
+  alfresco-monilitic-testing:
     runs-on: ubuntu-20.04
     steps:
     - name: Setup JDK 11
@@ -26,7 +26,7 @@ jobs:
         sudo apt-get purge -qqy php* apache* nginx* adoptopenjdk-8-hotspot
         sudo ln -s /usr/lib/jvm/adoptopenjdk-11-hotspot-amd64 /usr/lib/jvm/adoptopenjdk-8-hotspot-amd64
         sudo update-java-alternatives -s adoptopenjdk-11-hotspot-amd64
-    - name: Alfresco install
+    - name: Alfresco Monolitic Install
       run: |
         ./alfresco-ubuntu-install/alfinstall.sh
         sudo rm /etc/nginx/sites-available/default
@@ -62,3 +62,23 @@ jobs:
         cat /opt/alfresco/tomcat/logs/*
         python3 test/test_basic.py
         python3 test/test_ldap.py
+
+
+  alfresco-docker-testing:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        submodules: recursive
+    - name: Alfresco Docker Install
+      run: |
+        ( cd docker-compose && sudo ../fixperms.sh )
+        ( cd docker-compose/volumes/data/certs/conf && sudo openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=newdomain.com" -addext "subjectAltName=DNS:newdomain.com" -newkey rsa:2048 -out fullchain.pem -keyout privkey.pem )
+        ( cd docker-compose && docker-compose up -d)
+    - name: Install Pause
+      run: sleep 4m
+    - name: Basic web tests
+      run: |
+        python3 test/test_basic.py
+        python3 test/test_audit.py
