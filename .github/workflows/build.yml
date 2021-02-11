@@ -51,11 +51,7 @@ jobs:
         #python3 test/test_audit.py
     - name: Installs local LDAP Server
       run: sudo scripts/ldap-install.sh
-<<<<<<< HEAD
-    - name: Manual LDAP Test
-=======
     - name: Testing local LDAP Server
->>>>>>> 359600bb1da04eeeeb44d5942ce44d68df4a501c
       run: ldapsearch -LLL -H ldap://localhost:389 -D cn=ldapuser,ou=ldapgroup,dc=greencore,dc=priv -w dogood -x -bdc=greencore,dc=priv cn=ldapuser
     - name: Integrate LDAP into Alfresco
       run: |
@@ -74,7 +70,6 @@ jobs:
         ps faxww
         cat /opt/alfresco/tomcat/logs/*
         python3 test/test_basic.py
-<<<<<<< HEAD
         python3 test/test_ldap.py
 
 
@@ -96,6 +91,4 @@ jobs:
       run: |
         python3 test/test_basic.py
         python3 test/test_audit.py
-=======
         #python3 test/test_ldap.py
->>>>>>> 359600bb1da04eeeeb44d5942ce44d68df4a501c
