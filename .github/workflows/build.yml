@@ -82,9 +82,9 @@ jobs:
         submodules: recursive
     - name: Alfresco Docker Install
       run: |
-        ( cd docker-compose && sudo ../fixperms.sh )
-        ( cd docker-compose/volumes/data/certs/conf && sudo openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=newdomain.com" -addext "subjectAltName=DNS:newdomain.com" -newkey rsa:2048 -out fullchain.pem -keyout privkey.pem )
-        ( cd docker-compose && docker-compose up -d)
+        ( cd acs-community-deployment/docker-compose && sudo ../fixperms.sh )
+        ( cd acs-community-deployment/docker-compose/volumes/data/certs/conf && sudo openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=newdomain.com" -addext "subjectAltName=DNS:newdomain.com" -newkey rsa:2048 -out fullchain.pem -keyout privkey.pem )
+        ( cd acs-community-deployment/docker-compose && docker-compose up -d)
     - name: Install Pause
       run: sleep 4m
     - name: Basic web tests
