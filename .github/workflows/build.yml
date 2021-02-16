@@ -89,6 +89,8 @@ jobs:
       run: sleep 4m
     - name: Basic web tests
       run: |
+        apt-get -qy install nmap
+        nmap -sV --script ssl-enum-ciphers -p localhost:443
         python3 test/test_basic.py
         python3 test/test_audit.py
         #python3 test/test_ldap.py
