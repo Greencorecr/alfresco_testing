@@ -27,7 +27,6 @@ jobs:
         pylint test/*.py
     - name: Github CI uninstall
       run: |
-        #sudo apt-get purge -qqy php* apache* nginx* adoptopenjdk-8-hotspot
         sudo apt-get purge -qqy apache* nginx* adoptopenjdk-8-hotspot
         sudo ln -s /usr/lib/jvm/adoptopenjdk-11-hotspot-amd64 /usr/lib/jvm/adoptopenjdk-8-hotspot-amd64
         sudo update-java-alternatives -s adoptopenjdk-11-hotspot-amd64
@@ -46,6 +45,8 @@ jobs:
       run: sleep 4m
     - name: Basic web tests
       run: |
+        sudo apt-get -qy install nmap
+        nmap -sV --script ssl-enum-ciphers -p 443 localhost
         java -version
         python3 test/test_basic.py
         #python3 test/test_audit.py
@@ -60,17 +61,12 @@ jobs:
         sudo sed -i 's/#LDAP# //g' /opt/alfresco/tomcat/shared/classes/alfresco-global.properties
         sudo /opt/alfresco/alfresco-service.sh servicestart
         sleep 1m
-    - name: Testing Alfresco B.A.R.T. Backup
-      run: |
-        # Descarga archivo de bart
-        sudo wget -O /opt/alfresco/scripts/bart/alfresco-bart.properties https://raw.githubusercontent.com/fede2cr/alfresco-ubuntu-install/master/scripts/alfresco-bart.properties
-        sudo /opt/alfresco/scripts/bart/alfresco-bart.sh backup all
     - name: Testing Alfresco LDAP Auth
       run: |
         ps faxww
         cat /opt/alfresco/tomcat/logs/*
         python3 test/test_basic.py
-        python3 test/test_ldap.py
+        #python3 test/test_ldap.py
 
 
   alfresco-docker-testing:
@@ -90,7 +86,7 @@ jobs:
     - name: Basic web tests
       run: |
         sudo apt-get -qy install nmap
-        nmap -sV --script ssl-enum-ciphers -p localhost:443
+        nmap -sV --script ssl-enum-ciphers -p 443 localhost
         python3 test/test_basic.py
         python3 test/test_audit.py
         #python3 test/test_ldap.py
