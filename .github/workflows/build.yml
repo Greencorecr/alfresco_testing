@@ -67,6 +67,14 @@ jobs:
         cat /opt/alfresco/tomcat/logs/*
         python3 test/test_basic.py
         #python3 test/test_ldap.py
+    - name: Install tools for selenium testing
+      run: |
+        sudo pip3 install selenium
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.29.0/geckodriver-v0.29.0-linux64.tar.gz
+        tar xzvf geckodriver-v0.29.0-linux64.tar.gz
+        sudo mv geckodriver /usr/local/bin/geckodriver
+    - name: Basic Selenium Tests
+      run: test/test_selenium_basic.py
 
 
   alfresco-docker-testing:
