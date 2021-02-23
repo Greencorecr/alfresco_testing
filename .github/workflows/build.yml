@@ -56,25 +56,25 @@ jobs:
         java -version
         python3 test/test_basic.py
         #python3 test/test_audit.py
-    - name: Installs local LDAP Server
-      run: sudo scripts/ldap-install.sh
-    - name: Testing local LDAP Server
-      run: ldapsearch -LLL -H ldap://localhost:389 -D cn=ldapuser,ou=ldapgroup,dc=greencore,dc=priv -w dogood -x -bdc=greencore,dc=priv cn=ldapuser
-    - name: Integrate LDAP into Alfresco
-      run: |
-        sudo /opt/alfresco/alfresco-service.sh servicestop
-        sudo rm /opt/alfresco/tomcat/logs/*
-        sudo sed -i 's/#LDAP# //g' /opt/alfresco/tomcat/shared/classes/alfresco-global.properties
-        sudo /opt/alfresco/alfresco-service.sh servicestart
-        sleep 1m
-    - name: Testing Alfresco LDAP Auth
-      run: |
-        ps faxww
-        cat /opt/alfresco/tomcat/logs/*
-        python3 test/test_basic.py
-        #python3 test/test_ldap.py
     - name: Basic Selenium Tests
-      run: test/test_selenium_basic.py
+      run: python test/test_selenium_basic.py
+#    - name: Installs local LDAP Server
+#      run: sudo scripts/ldap-install.sh
+#    - name: Testing local LDAP Server
+#      run: ldapsearch -LLL -H ldap://localhost:389 -D cn=ldapuser,ou=ldapgroup,dc=greencore,dc=priv -w dogood -x -bdc=greencore,dc=priv cn=ldapuser
+#    - name: Integrate LDAP into Alfresco
+#      run: |
+#        sudo /opt/alfresco/alfresco-service.sh servicestop
+#        sudo rm /opt/alfresco/tomcat/logs/*
+#        sudo sed -i 's/#LDAP# //g' /opt/alfresco/tomcat/shared/classes/alfresco-global.properties
+#        sudo /opt/alfresco/alfresco-service.sh servicestart
+#        sleep 1m
+#    - name: Testing Alfresco LDAP Auth
+#      run: |
+#        ps faxww
+#        cat /opt/alfresco/tomcat/logs/*
+#        python3 test/test_basic.py
+#        #python3 test/test_ldap.py
 
 
 #  alfresco-docker-testing:
