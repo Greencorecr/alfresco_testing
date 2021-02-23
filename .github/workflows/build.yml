@@ -21,6 +21,12 @@ jobs:
       with:
         fetch-depth: 0
         submodules: recursive
+    - name: Install tools for selenium testing
+      run: |
+        sudo pip3 install selenium
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.29.0/geckodriver-v0.29.0-linux64.tar.gz
+        tar xzvf geckodriver-v0.29.0-linux64.tar.gz
+        sudo mv geckodriver /usr/local/bin/geckodriver
     - name: Pylint checks
       run: |
         sudo pip3 install pylint
@@ -67,34 +73,28 @@ jobs:
         cat /opt/alfresco/tomcat/logs/*
         python3 test/test_basic.py
         #python3 test/test_ldap.py
-    - name: Install tools for selenium testing
-      run: |
-        sudo pip3 install selenium
-        wget https://github.com/mozilla/geckodriver/releases/download/v0.29.0/geckodriver-v0.29.0-linux64.tar.gz
-        tar xzvf geckodriver-v0.29.0-linux64.tar.gz
-        sudo mv geckodriver /usr/local/bin/geckodriver
     - name: Basic Selenium Tests
       run: test/test_selenium_basic.py
 
 
-  alfresco-docker-testing:
-    runs-on: ubuntu-20.04
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        submodules: recursive
-    - name: Alfresco Docker Install
-      run: |
-        ( cd acs-community-deployment/docker-compose && sudo ../fixperms.sh )
-        ( cd acs-community-deployment/docker-compose/volumes/data/certs/conf && sudo openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=newdomain.com" -addext "subjectAltName=DNS:newdomain.com" -newkey rsa:2048 -out fullchain.pem -keyout privkey.pem )
-        ( cd acs-community-deployment/docker-compose && docker-compose up -d)
-    - name: Install Pause
-      run: sleep 4m
-    - name: Basic web tests
-      run: |
-        sudo apt-get -qy install nmap
-        nmap -sV --script ssl-enum-ciphers -p 443 localhost
-        python3 test/test_basic.py
-        python3 test/test_audit.py
-        #python3 test/test_ldap.py
+#  alfresco-docker-testing:
+#    runs-on: ubuntu-20.04
+#    steps:
+#    - uses: actions/checkout@v2
+#      with:
+#        fetch-depth: 0
+#        submodules: recursive
+#    - name: Alfresco Docker Install
+#      run: |
+#        ( cd acs-community-deployment/docker-compose && sudo ../fixperms.sh )
+#        ( cd acs-community-deployment/docker-compose/volumes/data/certs/conf && sudo openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=newdomain.com" -addext "subjectAltName=DNS:newdomain.com" -newkey rsa:2048 -out fullchain.pem -keyout privkey.pem )
+#        ( cd acs-community-deployment/docker-compose && docker-compose up -d)
+#    - name: Install Pause
+#      run: sleep 4m
+#    - name: Basic web tests
+#      run: |
+#        sudo apt-get -qy install nmap
+#        nmap -sV --script ssl-enum-ciphers -p 443 localhost
+#        python3 test/test_basic.py
+#        python3 test/test_audit.py
+#        #python3 test/test_ldap.py
