@@ -4,3 +4,6 @@
 [submodule "acs-community-deployment"]
 	path = acs-community-deployment
 	url = https://github.com/Greencorecr/acs-community-deployment
+[submodule "alfresco_addons"]
+	path = alfresco_addons
+	url = git@github.com:Greencorecr/alfresco_addons.git
