@@ -22,11 +22,6 @@ jobs:
         fetch-depth: 0
         token: ${{ secrets.PAT }}
         submodules: recursive
-#    - name: Checkout submodules
-#      run: |
-#        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
-#        git submodule sync --recursive
-#        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
     - name: Install tools for selenium testing
       run: |
         sudo pip3 install selenium
@@ -61,6 +56,7 @@ jobs:
         nmap -sV --script ssl-enum-ciphers -p 443 localhost
         java -version
         python3 test/test_basic.py
+        find .
         #python3 test/test_audit.py
     - name: Basic Selenium Tests
       run: python test/test_selenium_basic.py
