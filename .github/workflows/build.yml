@@ -20,7 +20,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-        token: ${{ secrets.github-priv-repo-key }}
+        token: ${{ secrets.REPO_KEY }}
         submodules: recursive
 #    - name: Checkout submodules
 #      run: |
