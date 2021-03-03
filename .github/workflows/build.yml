@@ -60,6 +60,12 @@ jobs:
         #python3 test/test_audit.py
     - name: Basic Selenium Tests
       run: python test/test_selenium_basic.py
+    - name: Installs addons
+      run: |
+        cd alfresco_addons
+        sudo -u alfresco ./monolitic_install.sh
+        find /opt/alfresco/modules -ls
+      
 #    - name: Installs local LDAP Server
 #      run: sudo scripts/ldap-install.sh
 #    - name: Testing local LDAP Server
