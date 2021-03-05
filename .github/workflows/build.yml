@@ -37,6 +37,12 @@ jobs:
         sudo apt-get purge -qqy apache* nginx* adoptopenjdk-8-hotspot
         sudo ln -s /usr/lib/jvm/adoptopenjdk-11-hotspot-amd64 /usr/lib/jvm/adoptopenjdk-8-hotspot-amd64
         sudo update-java-alternatives -s adoptopenjdk-11-hotspot-amd64
+    - name: Adding sudo perms
+      run: |
+        cat << EOF | sudo tee /etc/sudoers.d/ci
+        $USER ALL=(ALL) NOPASSWD: ALL
+        Defaults:$USER !requiretty
+        EOF
     - name: Alfresco Monolitic Install
       run: |
         ./alfresco-ubuntu-install/alfinstall.sh
@@ -65,7 +71,23 @@ jobs:
         cd alfresco_addons
         sudo -u alfresco ./monolitic_install.sh
         find /opt/alfresco/modules -ls
-      
+    - name: Tests backup
+      run: |
+        sudo -u postgres pg_dump -Fc -U postgres alfresco -f /tmp/backup.sql.gz
+        sudo cp -a /opt/alfresco /opt/alfresco-restore
+        sudo /opt/alfresco/alfresco-service.sh servicestop
+        sudo -u alfresco /opt/alfresco/solr6/solr/bin/solr stop
+        sudo -u postgres pg_restore -v -c -d alfresco /tmp/backup.sql.gz
+        sudo mv /opt/alfresco /opt/alfresco-antes-restaurado-${date +%F-%s}
+        sudo mv /opt/alfresco-restore /opt/alfresco
+        sudo wget https://github.com/Greencorecr/alf_utils/raw/main/fixperms/fixperms.sh
+        sudo ./fixperms.sh
+        sudo /opt/alfresco/alfresco-service.sh servicestart
+        sudo -u alfresco /opt/alfresco/solr6/solr/bin/solr start
+    - name: Restore pause
+      run: sleep 4m
+    - name: Basic Selenium Tests after restore
+      run: python test/test_selenium_basic.py
 #    - name: Installs local LDAP Server
 #      run: sudo scripts/ldap-install.sh
 #    - name: Testing local LDAP Server
