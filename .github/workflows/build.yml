@@ -71,7 +71,7 @@ jobs:
     - name: Installs addons
       run: |
         cd alfresco_addons
-        sudo -u alfresco ./monolitic_install.sh
+        #sudo -u alfresco ./monolitic_install.sh
         find /opt/alfresco/modules -ls
     - name: Tests backup
       run: |
