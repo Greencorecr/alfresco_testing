@@ -83,6 +83,7 @@ jobs:
         sudo mv /opt/alfresco /opt/alfresco-antes-restaurado
         sudo mv /opt/alfresco-restore /opt/alfresco
         sudo wget https://github.com/Greencorecr/alf_utils/raw/main/fixperms/fixperms.sh
+        sudo chmod +x fixperms.sh
         sudo ./fixperms.sh
         sudo /opt/alfresco/alfresco-service.sh servicestart
         sudo -u alfresco /opt/alfresco/solr6/solr/bin/solr start
