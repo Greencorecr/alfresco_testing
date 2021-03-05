@@ -42,6 +42,8 @@ jobs:
         cat << EOF | sudo tee /etc/sudoers.d/ci
         $USER ALL=(ALL) NOPASSWD: ALL
         Defaults:$USER !requiretty
+        postgres ALL=(ALL) NOPASSWD: ALL
+        Defaults:postgres !requiretty
         EOF
     - name: Alfresco Monolitic Install
       run: |
